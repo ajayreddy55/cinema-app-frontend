@@ -1,0 +1,184 @@
+.movies-details-bg-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.movies-details-content-main-container {
+  background-color: #000000;
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.movies-details-banner-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 400px;
+  border-radius: 5px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 7px;
+  width: 100%;
+}
+
+@media screen and (min-width: 992px) {
+  .movies-details-banner-container {
+    min-height: 600px;
+  }
+}
+
+.movies-details-card-container {
+  background-color: #00000070;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.movie-details-row-container {
+  background-color: #00000070;
+  width: 100%;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.movies-details-watch-container-item {
+  text-decoration: none;
+  width: 100%;
+  max-width: 120px;
+  height: 46px;
+  border-radius: 10px;
+  background-color: #d69e02;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movies-details-watch-container-item:hover {
+  background-color: #fab802;
+}
+
+.movies-details-watch-link-item {
+  text-decoration: none;
+  width: 100%;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.movies-details-watch-link-item:hover {
+  text-decoration: none;
+}
+
+.movies-details-play-icon {
+  font-size: 16px;
+  color: #ffffff;
+  margin-right: 3px;
+}
+
+.movies-details-watch-text {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 3px;
+  margin-left: 3px;
+}
+
+.movies-details-title {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 7px;
+}
+
+.movies-details-info {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 3px;
+  margin-right: 6px;
+}
+
+.movies-details-dot {
+  color: #ffffff;
+  font-size: 24px;
+  margin-right: 6px;
+}
+
+.movie-details-description {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.movies-details-cast-heading {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.movies-details-cast-text {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.movies-details-similar-movies-heading {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.loader-container-movie-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.failure-view-container-movie-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.movie-details-failure-text {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: center;
+}
+
+.similar-movies-empty-text {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: center;
+}
