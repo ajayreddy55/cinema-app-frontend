@@ -6,6 +6,9 @@ import SignupForm from "./components/signupform";
 import Home from "./components/home";
 import MoviesDetailsPage from "./components/moviesDetails";
 import MoviePlayer from "./components/moviewatch";
+import SportWatch from "./components/sportwatch";
+import NewsWatch from "./components/newswatch";
+import ShowDetailsPage from "./components/showDetails";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
         element={<MoviesDetailsPage />}
       />
       <Route exact path="/movie-watch/:movieId" element={<MoviePlayer />} />
+      <Route exact path="/sport-watch/:sportId" element={<SportWatch />} />
+      <Route exact path="/news-watch/:newsId" element={<NewsWatch />} />
+      <Route exact path="/show-details/:showId" element={<ShowDetailsPage />} />
     </Routes>
   );
 }

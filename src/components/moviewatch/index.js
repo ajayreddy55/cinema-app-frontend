@@ -107,7 +107,7 @@ const MoviePlayer = () => {
     return (
       <div className="container-fluid movie-player-inner-container mt-3 mb-2">
         <div className="row movie-player-row-container mt-3 mb-3">
-          <div className="col-12">
+          <div className="col-12 movie-player-video-container">
             <ReactPlayer
               url={responseObject.videoUrl}
               controls

@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import { InfinitySpin } from "react-loader-spinner";
 import MoviesCardSlider from "../movieCardSlider";
 import NewsCardSlider from "../newsCardSlider";
+import ShowsCardSlider from "../showsCardSlider";
 
 const carouselList = [
   {
@@ -121,7 +122,7 @@ const Home = () => {
     }));
 
     const sportsPicksUrl =
-      "http://localhost:5555/api/sports?matchDate=&sportType=&tournamentName=&team1=&team2=&votes=8000000";
+      "http://localhost:5555/api/sports?matchDate=&sportType=&tournamentName=&team1=&team2=&votes=40000000";
 
     const jwtToken = Cookies.get("cinema_jwt_token");
 
@@ -333,8 +334,8 @@ const Home = () => {
     );
   };
 
-  //top movies shows displaying
-  const displayTopMoviesShows = (object) => {
+  //top movies displaying
+  const displayTopMovies = (object) => {
     if (object.responseList.length === 0) {
       return displayTextLengthZero();
     }
@@ -343,6 +344,21 @@ const Home = () => {
       <Slider {...sliderSettings} className="home-categories-slider mt-4">
         {object.responseList.map((eachMovie) => (
           <MoviesCardSlider key={eachMovie._id} eachMovie={eachMovie} />
+        ))}
+      </Slider>
+    );
+  };
+
+  //top shows displaying
+  const displayTopShows = (object) => {
+    if (object.responseList.length === 0) {
+      return displayTextLengthZero();
+    }
+
+    return (
+      <Slider {...sliderSettings} className="home-categories-slider mt-4">
+        {object.responseList.map((eachShow) => (
+          <ShowsCardSlider key={eachShow._id} eachShow={eachShow} />
         ))}
       </Slider>
     );
@@ -487,10 +503,7 @@ const Home = () => {
                       <IoIosArrowForward className="home-explore-more-arrow" />
                     </Link>
                   </div>
-                  {checkingWhatToDisplay(
-                    topMoviesObject,
-                    displayTopMoviesShows
-                  )}
+                  {checkingWhatToDisplay(topMoviesObject, displayTopMovies)}
                 </div>
               </div>
               {/* top shows */}
@@ -503,7 +516,7 @@ const Home = () => {
                       <IoIosArrowForward className="home-explore-more-arrow" />
                     </Link>
                   </div>
-                  {checkingWhatToDisplay(topShowsObject, displayTopMoviesShows)}
+                  {checkingWhatToDisplay(topShowsObject, displayTopShows)}
                 </div>
               </div>
               {/* top news */}

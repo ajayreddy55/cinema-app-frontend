@@ -1,0 +1,21 @@
+.similar-news-link-item {
+  width: 100%;
+  height: 210px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.similar-news-link-item:hover {
+  text-decoration: none;
+}
+
+.similar-news-image {
+  width: 100%;
+  height: 210px;
+  border-radius: 10px;
+}
+
+.similar-news-container:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+}

@@ -5,11 +5,11 @@ import "./index.css";
 const NewsCardSlider = (props) => {
   const { newsItem } = props;
 
-  const { thumbnailUrl, title } = newsItem;
+  const { thumbnailUrl, title, _id } = newsItem;
 
   return (
     <div className="news-card-slider-main-container">
-      <Link className="news-card-link-item">
+      <Link to={`/news-watch/${_id}`} className="news-card-link-item">
         <img
           src={thumbnailUrl}
           alt={title}
