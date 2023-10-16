@@ -4,7 +4,7 @@ import "./index.css";
 const Header = () => {
   return (
     <nav class="navbar navbar-expand-lg navbar-dark navbar-container-main">
-      <Link class="navbar-brand navbar-link-item">
+      <Link to={"/"} class="navbar-brand navbar-link-item">
         <div className="d-flex align-items-center">
           <img
             className="navbar-logo-image"
@@ -36,22 +36,32 @@ const Header = () => {
         </button>
         <ul class="navbar-nav mr-auto ml-1">
           <li class="nav-item ml-2">
-            <Link class="nav-link nav-link-item-style">Home</Link>
+            <Link to={"/"} class="nav-link nav-link-item-style">
+              Home
+            </Link>
           </li>
           <li class="nav-item ml-2">
-            <Link class="nav-link nav-link-item-style">Movies</Link>
-          </li>
-
-          <li class="nav-item ml-2">
-            <Link class="nav-link nav-link-item-style">TV Shows</Link>
-          </li>
-
-          <li class="nav-item ml-2">
-            <Link class="nav-link nav-link-item-style">Sports</Link>
+            <Link to={"/movies"} class="nav-link nav-link-item-style">
+              Movies
+            </Link>
           </li>
 
           <li class="nav-item ml-2">
-            <Link class="nav-link nav-link-item-style">News</Link>
+            <Link to={"/tv-shows"} class="nav-link nav-link-item-style">
+              TV Shows
+            </Link>
+          </li>
+
+          <li class="nav-item ml-2">
+            <Link to={"/sports"} class="nav-link nav-link-item-style">
+              Sports
+            </Link>
+          </li>
+
+          <li class="nav-item ml-2">
+            <Link to={"/news"} class="nav-link nav-link-item-style">
+              News
+            </Link>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

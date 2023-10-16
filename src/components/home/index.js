@@ -85,6 +85,12 @@ const Home = () => {
     errMsg: "",
   });
 
+  const [blockbusterMovies, setBlockBusterMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -112,6 +118,11 @@ const Home = () => {
   //top news use effect
   useEffect(() => {
     getTopNews();
+  }, []);
+
+  //blockbuster movies useEffect
+  useEffect(() => {
+    getBlockBusterMovies();
   }, []);
 
   //top sports api
@@ -267,6 +278,44 @@ const Home = () => {
         responseList: [],
         resStatus: apiConstants.failure,
         errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  //blockbuster movies API
+  const getBlockBusterMovies = async () => {
+    setBlockBusterMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const topMoviesUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=9.0&views=20000000&languages=&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(topMoviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setBlockBusterMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setBlockBusterMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
       }));
     }
   };
@@ -438,7 +487,7 @@ const Home = () => {
                         className="carousel-list-item-home"
                         key={eachItem.id}
                       >
-                        <div className="carousel-main-item">
+                        <div className="carousel-main-item-home">
                           <img
                             src={eachItem.imageUrl}
                             alt={eachItem.title}
@@ -479,18 +528,6 @@ const Home = () => {
                     topSportsPicksObject,
                     displayTopSportsPicks
                   )}
-                  {/* <Slider
-                    {...sliderSettings}
-                    className="home-categories-slider mt-4"
-                  >
-                    {checkingWhatToDisplay(
-                      topSportsPicksObject,
-                      displayTopSportsPicks
-                    )}
-                    {carouselList.map((eachItem) => (
-                       <SportsCardSlider key={eachItem._id} item={eachItem} />
-                     ))}
-                  </Slider> */}
                 </div>
               </div>
               {/* top movies */}
@@ -530,6 +567,19 @@ const Home = () => {
                     </Link>
                   </div>
                   {checkingWhatToDisplay(topNewsObject, displayTopNews)}
+                </div>
+              </div>
+              {/* Blockbuster movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Blockbuster Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(blockbusterMovies, displayTopMovies)}
                 </div>
               </div>
             </div>

@@ -32,7 +32,7 @@ const ShowDetailsPage = () => {
     errMsg: "",
   });
 
-  const [activeSeason, setActiveSeason] = useState(0);
+  const [activeSeason, setActiveSeason] = useState({});
 
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -185,7 +185,7 @@ const ShowDetailsPage = () => {
               <div className="col-12 col-md-2 mt-3">
                 <div className="mr-2 show-details-watch-container-item">
                   <Link
-                    to={`/movie-watch/${responseDetailsObject._id}`}
+                    to={`/show-watch/${responseDetailsObject._id}/${activeSeason.seasonNumber}/${activeSeason._id}/${activeSeason.episodes[0]._id}`}
                     className="d-flex align-items-center show-details-watch-link-item"
                   >
                     <FaPlay className="movies-details-play-icon" />

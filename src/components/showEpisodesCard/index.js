@@ -10,7 +10,10 @@ const ShowEpisodesCard = (props) => {
 
   return (
     <div className="show-episodes-card-main-container">
-      <Link className="show-episodes-link-item">
+      <Link
+        to={`/show-watch/${seasonDetails._id}/${seasonObject.seasonNumber}/${seasonObject._id}/${_id}`}
+        className="show-episodes-link-item"
+      >
         <img
           src={episodeThumbnail}
           alt={episodeTitle}

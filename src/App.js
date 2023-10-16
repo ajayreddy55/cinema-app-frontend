@@ -9,6 +9,11 @@ import MoviePlayer from "./components/moviewatch";
 import SportWatch from "./components/sportwatch";
 import NewsWatch from "./components/newswatch";
 import ShowDetailsPage from "./components/showDetails";
+import ShowPlayer from "./components/showWatch";
+import MoviesPage from "./components/moviesPage";
+import ShowsPage from "./components/showsPage";
+import SportsPage from "./components/sportsPage";
+import NewsPage from "./components/newsPage";
 
 function App() {
   return (
@@ -25,6 +30,15 @@ function App() {
       <Route exact path="/sport-watch/:sportId" element={<SportWatch />} />
       <Route exact path="/news-watch/:newsId" element={<NewsWatch />} />
       <Route exact path="/show-details/:showId" element={<ShowDetailsPage />} />
+      <Route
+        exact
+        path="/show-watch/:showId/:seasonNumber/:seasonId/:episodeId"
+        element={<ShowPlayer />}
+      />
+      <Route exact path="/movies" element={<MoviesPage />} />
+      <Route exact path="/tv-shows" element={<ShowsPage />} />
+      <Route exact path="/sports" element={<SportsPage />} />
+      <Route exact path="/news" element={<NewsPage />} />
     </Routes>
   );
 }

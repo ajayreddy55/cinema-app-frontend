@@ -1,4 +1,4 @@
-.home-bg-container {
+.news-bg-container {
   background-color: #000000;
   min-height: 100vh;
   display: flex;
@@ -6,21 +6,21 @@
   justify-content: space-between;
 }
 
-.carousel-slider-home {
+.carousel-slider-news {
   width: 97%;
 }
 
-.carousel-list-item-home {
+.carousel-list-item-news {
   width: 100%;
 }
 
-.carousel-main-item-home {
+.carousel-main-item-news {
   width: 100%;
   height: 350px;
   position: relative;
 }
 
-.carousel-title-container-home {
+.carousel-title-container-news {
   position: absolute;
   bottom: 0px;
   background-color: #00000080;
@@ -33,7 +33,7 @@
   padding-bottom: 8px;
 }
 
-.carousel-title-home {
+.carousel-title-news {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 28px;
@@ -42,26 +42,26 @@
   margin-bottom: 3px;
 }
 
-.carousel-image-home {
+.carousel-image-news {
   width: 100%;
   height: 350px;
 }
 
-.banner-home-container {
+.banner-news-container {
   width: 97%;
 }
 
-.home-banner-image {
+.news-banner-image {
   width: 100%;
   height: 220px;
   border-radius: 10px;
 }
 
-.home-slides-main-container {
+.news-slides-main-container {
   width: 97%;
 }
 
-.home-topics-heading {
+.news-topics-heading {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 26px;
@@ -70,7 +70,7 @@
   margin-bottom: 3px;
 }
 
-.home-explore-link {
+.news-explore-link {
   text-decoration: none;
   color: #ffffff;
   margin-left: 2px;
@@ -78,12 +78,12 @@
   align-items: center;
 }
 
-.home-explore-link:hover {
+.news-explore-link:hover {
   color: blue;
   text-decoration: underline;
 }
 
-.home-explore-text {
+.news-explore-text {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
@@ -92,16 +92,16 @@
   margin-bottom: 3px;
 }
 
-.home-explore-more-arrow {
+.news-explore-more-arrow {
   font-size: 14px;
   margin-left: 1px;
 }
 
-.home-categories-slider {
+.news-categories-slider {
   width: 97%;
 }
 
-.home-empty-list-text {
+.news-empty-list-text {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 20px;
@@ -110,7 +110,7 @@
   text-align: center;
 }
 
-.loader-container-home {
+.loader-container-news {
   width: 97%;
 }
 
