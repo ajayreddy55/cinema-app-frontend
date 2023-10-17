@@ -91,6 +91,48 @@ const Home = () => {
     errMsg: "",
   });
 
+  const [blockbusterShows, setBlockBusterShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [actionMovies, setActionMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [fantasyShows, setFantasyShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [thrillerMovies, setThrillerMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [comedyMovies, setComedyMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [horrorMovies, setHorrorMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [dramaMovies, setDramaMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -125,6 +167,41 @@ const Home = () => {
     getBlockBusterMovies();
   }, []);
 
+  //blockbuster shows
+  useEffect(() => {
+    getBlockBusterShows();
+  }, []);
+
+  //action movies useEffect
+  useEffect(() => {
+    getActionMovies();
+  }, []);
+
+  //fantasy shows useEffect
+  useEffect(() => {
+    getFantasyShows();
+  }, []);
+
+  //thriller movies useEffect
+  useEffect(() => {
+    getThrillerMovies();
+  }, []);
+
+  //comedy movies useEffect
+  useEffect(() => {
+    getComedyMovies();
+  }, []);
+
+  //horror movies useEffect
+  useEffect(() => {
+    getHorrorMovies();
+  }, []);
+
+  //Drama movies useEffect
+  useEffect(() => {
+    getDramaMovies();
+  }, []);
+
   //top sports api
   const getTopSportsPicks = async () => {
     setTopSportsPicksObject((prevState) => ({
@@ -132,7 +209,7 @@ const Home = () => {
       resStatus: apiConstants.inProgress,
     }));
 
-    const sportsPicksUrl =
+    const sportsUrl =
       "http://localhost:5555/api/sports?matchDate=&sportType=&tournamentName=&team1=&team2=&votes=40000000";
 
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -144,7 +221,7 @@ const Home = () => {
       },
     };
 
-    const topSportsPicksRes = await fetch(sportsPicksUrl, options);
+    const topSportsPicksRes = await fetch(sportsUrl, options);
 
     if (topSportsPicksRes.ok) {
       const topSportsPicksJson = await topSportsPicksRes.json();
@@ -172,7 +249,7 @@ const Home = () => {
       resStatus: apiConstants.inProgress,
     }));
 
-    const topMoviesUrl =
+    const moviesUrl =
       "http://localhost:5555/api/movies-show?genre=&rating=&views=8000000&languages=&original_language=&category=movies&studio=&director=";
 
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -183,7 +260,7 @@ const Home = () => {
       },
     };
 
-    const moviesRes = await fetch(topMoviesUrl, options);
+    const moviesRes = await fetch(moviesUrl, options);
 
     if (moviesRes.ok) {
       const moviesResJson = await moviesRes.json();
@@ -210,7 +287,7 @@ const Home = () => {
       resStatus: apiConstants.inProgress,
     }));
 
-    const topShowsUrl =
+    const showsUrl =
       "http://localhost:5555/api/movies-show?genre=&rating=&views=8000000&languages=&original_language=&category=tv-shows&studio=&director=";
 
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -222,7 +299,7 @@ const Home = () => {
       },
     };
 
-    const showsRes = await fetch(topShowsUrl, options);
+    const showsRes = await fetch(showsUrl, options);
 
     if (showsRes.ok) {
       const showsResJson = await showsRes.json();
@@ -250,7 +327,7 @@ const Home = () => {
       resStatus: apiConstants.inProgress,
     }));
 
-    const topNewsUrl =
+    const newsUrl =
       "http://localhost:5555/api/news?channel_name=&news_category=&news_type=&news_tag=israel&language=";
 
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -261,7 +338,7 @@ const Home = () => {
       },
     };
 
-    const topNewsRes = await fetch(topNewsUrl, options);
+    const topNewsRes = await fetch(newsUrl, options);
 
     if (topNewsRes.ok) {
       const topNewsResJson = await topNewsRes.json();
@@ -312,6 +389,276 @@ const Home = () => {
     } else {
       const moviesResJson = await moviesRes.json();
       setBlockBusterMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  //Block buster shows api
+  const getBlockBusterShows = async () => {
+    setBlockBusterShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const blockbusterShowsUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=8.5&views=10000000&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(blockbusterShowsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setBlockBusterShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setBlockBusterShows((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  //action movies api
+  const getActionMovies = async () => {
+    setActionMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=action&rating=&views=&languages=&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setActionMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setActionMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  //fantasy shows api
+  const getFantasyShows = async () => {
+    setFantasyShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=fantasy&rating=&views=&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setFantasyShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setFantasyShows((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  //thriller movies api
+  const getThrillerMovies = async () => {
+    setThrillerMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=thriller&rating=&views=&languages=&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setThrillerMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setThrillerMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  //comedy movies api
+  const getComedyMovies = async () => {
+    setComedyMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=comedy&rating=&views=&languages=&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setComedyMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setComedyMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  //horror movies api
+  const getHorrorMovies = async () => {
+    setHorrorMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=horror&rating=&views=&languages=&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setHorrorMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setHorrorMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  //drama movies api
+  const getDramaMovies = async () => {
+    setDramaMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=drama&rating=&views=&languages=&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setDramaMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setDramaMovies((prevState) => ({
         ...prevState,
         responseList: [],
         resStatus: apiConstants.failure,
@@ -580,6 +927,97 @@ const Home = () => {
                     </Link>
                   </div>
                   {checkingWhatToDisplay(blockbusterMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* Blockbuster shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Blockbuster Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(blockbusterShows, displayTopShows)}
+                </div>
+              </div>
+              {/* Action movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Action Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(actionMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* Fantasy shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Fantasy Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(fantasyShows, displayTopShows)}
+                </div>
+              </div>
+              {/* Thriller movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Thriller Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(thrillerMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* Comedy movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Comedy Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(comedyMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* Horror movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Horror Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(horrorMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* Drama movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Drama Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(dramaMovies, displayTopMovies)}
                 </div>
               </div>
             </div>

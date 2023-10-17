@@ -64,6 +64,18 @@ const ShowsPage = () => {
     errMsg: "",
   });
 
+  const [blockbusterShows, setBlockBusterShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [fantasyShows, setFantasyShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -76,6 +88,16 @@ const ShowsPage = () => {
   //top shows use effect
   useEffect(() => {
     getTopShows();
+  }, []);
+
+  //blockbuster shows
+  useEffect(() => {
+    getBlockBusterShows();
+  }, []);
+
+  //fantasy shows useEffect
+  useEffect(() => {
+    getFantasyShows();
   }, []);
 
   //top shows api
@@ -110,6 +132,86 @@ const ShowsPage = () => {
     } else {
       const showsResJson = await showsRes.json();
       setTopShowsObject((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  //Block buster shows api
+  const getBlockBusterShows = async () => {
+    setBlockBusterShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const blockbusterShowsUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=8.5&views=10000000&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(blockbusterShowsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setBlockBusterShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setBlockBusterShows((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  //fantasy shows api
+  const getFantasyShows = async () => {
+    setFantasyShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=fantasy&rating=&views=&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setFantasyShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setFantasyShows((prevState) => ({
         ...prevState,
         responseList: [],
         resStatus: apiConstants.failure,
@@ -274,6 +376,32 @@ const ShowsPage = () => {
                     </Link>
                   </div>
                   {checkingWhatToDisplay(topShowsObject, displayTopShows)}
+                </div>
+              </div>
+              {/* Blockbuster shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Blockbuster Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(blockbusterShows, displayTopShows)}
+                </div>
+              </div>
+              {/* Fantasy shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Fantasy Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(fantasyShows, displayTopShows)}
                 </div>
               </div>
             </div>
