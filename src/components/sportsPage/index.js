@@ -67,6 +67,18 @@ const SportsPage = () => {
     errMsg: "",
   });
 
+  const [cricketSports, setCricketSports] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [footballSports, setFootballSports] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -79,6 +91,16 @@ const SportsPage = () => {
   //top sports use effect
   useEffect(() => {
     getTopSportsPicks();
+  }, []);
+
+  //cricket sports use effect
+  useEffect(() => {
+    getCricketSports();
+  }, []);
+
+  //football sports use effect
+  useEffect(() => {
+    getFootballSports();
   }, []);
 
   //top sports api
@@ -113,6 +135,86 @@ const SportsPage = () => {
     } else {
       const topSportsPicksJson = await topSportsPicksRes.json();
       setTopSportsPicksObject((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topSportsPicksJson.message,
+      }));
+    }
+  };
+
+  //cricket sports api
+  const getCricketSports = async () => {
+    setCricketSports((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const sportsUrl =
+      "http://localhost:5555/api/sports?matchDate=&sportType=cricket&tournamentName=&team1=&team2=&votes=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topSportsPicksRes = await fetch(sportsUrl, options);
+
+    if (topSportsPicksRes.ok) {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setCricketSports((prevState) => ({
+        ...prevState,
+        responseList: topSportsPicksJson.sportsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setCricketSports((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topSportsPicksJson.message,
+      }));
+    }
+  };
+
+  //football sports api
+  const getFootballSports = async () => {
+    setFootballSports((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const sportsUrl =
+      "http://localhost:5555/api/sports?matchDate=&sportType=football&tournamentName=&team1=&team2=&votes=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topSportsPicksRes = await fetch(sportsUrl, options);
+
+    if (topSportsPicksRes.ok) {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setFootballSports((prevState) => ({
+        ...prevState,
+        responseList: topSportsPicksJson.sportsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setFootballSports((prevState) => ({
         ...prevState,
         responseList: [],
         resStatus: apiConstants.failure,
@@ -271,6 +373,32 @@ const SportsPage = () => {
                     topSportsPicksObject,
                     displayTopSportsPicks
                   )}
+                </div>
+              </div>
+              {/* Cricket Matches */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Cricket Matches</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(cricketSports, displayTopSportsPicks)}
+                </div>
+              </div>
+              {/* Football Matches */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Football Matches</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(footballSports, displayTopSportsPicks)}
                 </div>
               </div>
             </div>

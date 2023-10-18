@@ -67,6 +67,18 @@ const NewsPage = () => {
     errMsg: "",
   });
 
+  const [businessNews, setBusinessNews] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [sportsNews, setSportsNews] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -79,6 +91,16 @@ const NewsPage = () => {
   //top news use effect
   useEffect(() => {
     getTopNews();
+  }, []);
+
+  //business news use effect
+  useEffect(() => {
+    getBusinessNews();
+  }, []);
+
+  //sports news use effect
+  useEffect(() => {
+    getSportsNews();
   }, []);
 
   //top news api
@@ -112,6 +134,84 @@ const NewsPage = () => {
     } else {
       const topNewsResJson = await topNewsRes.json();
       setTopNewsObject((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  //business news api
+  const getBusinessNews = async () => {
+    setBusinessNews((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=&news_category=business&news_type=&news_tag=&language=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setBusinessNews((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setBusinessNews((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  //sports news api
+  const getSportsNews = async () => {
+    setSportsNews((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=&news_category=sport&news_type=&news_tag=&language=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setSportsNews((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setSportsNews((prevState) => ({
         ...prevState,
         responseList: [],
         resStatus: apiConstants.failure,
@@ -266,6 +366,32 @@ const NewsPage = () => {
                     </Link>
                   </div>
                   {checkingWhatToDisplay(topNewsObject, displayTopNews)}
+                </div>
+              </div>
+              {/* Business news */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Business News</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(businessNews, displayTopNews)}
+                </div>
+              </div>
+              {/* Sports news */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Sports News</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(sportsNews, displayTopNews)}
                 </div>
               </div>
             </div>

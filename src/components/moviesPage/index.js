@@ -102,6 +102,18 @@ const MoviesPage = () => {
     errMsg: "",
   });
 
+  const [crimeMovies, setCrimeMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [romanticMovies, setRomanticMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -144,6 +156,16 @@ const MoviesPage = () => {
   //Drama movies useEffect
   useEffect(() => {
     getDramaMovies();
+  }, []);
+
+  //Crime movies useEffect
+  useEffect(() => {
+    getCrimeMovies();
+  }, []);
+
+  //romantic movies useEffect
+  useEffect(() => {
+    getRomanticMovies();
   }, []);
 
   //top movies api
@@ -412,6 +434,82 @@ const MoviesPage = () => {
     }
   };
 
+  //Crime movies api
+  const getCrimeMovies = async () => {
+    setCrimeMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=crime&rating=&views=&languages=&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setCrimeMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setCrimeMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  //romantic movies api
+  const getRomanticMovies = async () => {
+    setRomanticMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=romance&rating=&views=&languages=&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setRomanticMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setRomanticMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
   //displaying error message
   const displayErrorMessage = (object) => {
     return (
@@ -648,6 +746,32 @@ const MoviesPage = () => {
                     </Link>
                   </div>
                   {checkingWhatToDisplay(dramaMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* Crime movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Crime Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(crimeMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* Romantic movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Romantic Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(romanticMovies, displayTopMovies)}
                 </div>
               </div>
             </div>

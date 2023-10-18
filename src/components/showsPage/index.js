@@ -76,6 +76,36 @@ const ShowsPage = () => {
     errMsg: "",
   });
 
+  const [actionShows, setActionShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [crimeShows, setCrimeShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [horrorShows, setHorrorShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [thrillerShows, setThrillerShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [dramaShows, setDramaShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -98,6 +128,31 @@ const ShowsPage = () => {
   //fantasy shows useEffect
   useEffect(() => {
     getFantasyShows();
+  }, []);
+
+  //action shows useEffect
+  useEffect(() => {
+    getActionShows();
+  }, []);
+
+  //crime shows use effect
+  useEffect(() => {
+    getCrimeShows();
+  }, []);
+
+  //horror shows use effect
+  useEffect(() => {
+    getHorrorShows();
+  }, []);
+
+  //thriller shows use effect
+  useEffect(() => {
+    getThrillerShows();
+  }, []);
+
+  //drama shows use effect
+  useEffect(() => {
+    getDramaShows();
   }, []);
 
   //top shows api
@@ -212,6 +267,206 @@ const ShowsPage = () => {
     } else {
       const showsResJson = await showsRes.json();
       setFantasyShows((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  //action shows api
+  const getActionShows = async () => {
+    setActionShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=action&rating=&views=&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setActionShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setActionShows((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  //crime shows api
+  const getCrimeShows = async () => {
+    setCrimeShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=crime&rating=&views=&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setCrimeShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setCrimeShows((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  //horror shows api
+  const getHorrorShows = async () => {
+    setHorrorShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=horror&rating=&views=&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setHorrorShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setHorrorShows((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  //thriller shows api
+  const getThrillerShows = async () => {
+    setThrillerShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=thriller&rating=&views=&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setThrillerShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setThrillerShows((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  //drama shows api
+  const getDramaShows = async () => {
+    setDramaShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=drama&rating=&views=&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setDramaShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setDramaShows((prevState) => ({
         ...prevState,
         responseList: [],
         resStatus: apiConstants.failure,
@@ -402,6 +657,71 @@ const ShowsPage = () => {
                     </Link>
                   </div>
                   {checkingWhatToDisplay(fantasyShows, displayTopShows)}
+                </div>
+              </div>
+              {/* Action shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Action Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(actionShows, displayTopShows)}
+                </div>
+              </div>
+              {/* Crime shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Crime Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(crimeShows, displayTopShows)}
+                </div>
+              </div>
+              {/* Horror shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Horror Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(horrorShows, displayTopShows)}
+                </div>
+              </div>
+              {/* Thriller shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Thriller Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(thrillerShows, displayTopShows)}
+                </div>
+              </div>
+              {/* Drama shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Drama Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(dramaShows, displayTopShows)}
                 </div>
               </div>
             </div>
