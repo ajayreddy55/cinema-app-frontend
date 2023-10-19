@@ -9,6 +9,7 @@ import MoviesDetailsSimilarMovies from "../SimilarMoviesCard";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InfinitySpin } from "react-loader-spinner";
+import Footer from "../footer";
 
 const apiConstants = {
   initial: "INITIAL",
@@ -221,6 +222,7 @@ const MoviesDetailsPage = () => {
       <div className="movies-details-content-main-container">
         {checkingWhatToDisplay()}
       </div>
+      <Footer />
     </div>
   );
 };

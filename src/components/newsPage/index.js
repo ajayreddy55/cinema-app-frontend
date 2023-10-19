@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InfinitySpin } from "react-loader-spinner";
 import NewsCardSlider from "../newsCardSlider";
+import Footer from "../footer";
 
 const carouselList = [
   {
@@ -79,6 +80,54 @@ const NewsPage = () => {
     errMsg: "",
   });
 
+  const [politicalNews, setPoliticalNews] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [newsByNews18, setNewsByNews18] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [newsByTv9, setNewsByTv9] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [newsByNTV, setNewsByNTV] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [newsByWION, setNewsByWION] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [newsInTelugu, setNewsInTelugu] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [newsInEnglish, setNewsInEnglish] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [allNewsVideos, setAllNewsVideos] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -101,6 +150,46 @@ const NewsPage = () => {
   //sports news use effect
   useEffect(() => {
     getSportsNews();
+  }, []);
+
+  //political news use effect
+  useEffect(() => {
+    getPoliticalNews();
+  }, []);
+
+  // news by cnn use effect
+  useEffect(() => {
+    getNewsByCNN18();
+  }, []);
+
+  // news by tv9 use effect
+  useEffect(() => {
+    getNewsByTv9();
+  }, []);
+
+  // news by ntv use effect
+  useEffect(() => {
+    getNewsByNTV();
+  }, []);
+
+  // news by wion use effect
+  useEffect(() => {
+    getNewsByWION();
+  }, []);
+
+  // news in telugu use effect
+  useEffect(() => {
+    getNewsInTelugu();
+  }, []);
+
+  // news in english use effect
+  useEffect(() => {
+    getNewsInEnglish();
+  }, []);
+
+  // all news use effect
+  useEffect(() => {
+    getAllNewsVideos();
   }, []);
 
   //top news api
@@ -212,6 +301,318 @@ const NewsPage = () => {
     } else {
       const topNewsResJson = await topNewsRes.json();
       setSportsNews((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  //political news api
+  const getPoliticalNews = async () => {
+    setPoliticalNews((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=&news_category=political&news_type=&news_tag=&language=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setPoliticalNews((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setPoliticalNews((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  // news by cnn 18 api
+  const getNewsByCNN18 = async () => {
+    setNewsByNews18((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=news 18&news_category=&news_type=&news_tag=&language=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsByNews18((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsByNews18((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  // news by tv9 api
+  const getNewsByTv9 = async () => {
+    setNewsByTv9((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=tv9&news_category=&news_type=&news_tag=&language=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsByTv9((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsByTv9((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  // news by ntv api
+  const getNewsByNTV = async () => {
+    setNewsByNTV((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=ntv&news_category=&news_type=&news_tag=&language=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsByNTV((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsByNTV((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  // news by wion api
+  const getNewsByWION = async () => {
+    setNewsByWION((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=wion&news_category=&news_type=&news_tag=&language=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsByWION((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsByWION((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  // news in telugu api
+  const getNewsInTelugu = async () => {
+    setNewsInTelugu((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=&news_category=&news_type=&news_tag=&language=telugu";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsInTelugu((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsInTelugu((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  // news in english api
+  const getNewsInEnglish = async () => {
+    setNewsInEnglish((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=&news_category=&news_type=&news_tag=&language=english";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsInEnglish((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setNewsInEnglish((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topNewsResJson.message,
+      }));
+    }
+  };
+
+  // all news videos api
+  const getAllNewsVideos = async () => {
+    setAllNewsVideos((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const newsUrl =
+      "http://localhost:5555/api/news?channel_name=&news_category=&news_type=&news_tag=&language=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topNewsRes = await fetch(newsUrl, options);
+
+    if (topNewsRes.ok) {
+      const topNewsResJson = await topNewsRes.json();
+      setAllNewsVideos((prevState) => ({
+        ...prevState,
+        responseList: topNewsResJson.newsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topNewsResJson = await topNewsRes.json();
+      setAllNewsVideos((prevState) => ({
         ...prevState,
         responseList: [],
         resStatus: apiConstants.failure,
@@ -394,10 +795,115 @@ const NewsPage = () => {
                   {checkingWhatToDisplay(sportsNews, displayTopNews)}
                 </div>
               </div>
+              {/* Political news */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Political News</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(politicalNews, displayTopNews)}
+                </div>
+              </div>
+              {/* news by cnn 18 */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">News by CNN News 18</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(newsByNews18, displayTopNews)}
+                </div>
+              </div>
+              {/* news by tv9 */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">News by TV9</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(newsByTv9, displayTopNews)}
+                </div>
+              </div>
+              {/* news by ntv */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">News by NTV</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(newsByNTV, displayTopNews)}
+                </div>
+              </div>
+              {/* news by WION */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">News by WION</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(newsByWION, displayTopNews)}
+                </div>
+              </div>
+              {/* news in telugu */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">News in Telugu</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(newsInTelugu, displayTopNews)}
+                </div>
+              </div>
+              {/* news in english */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">News in English</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(newsInEnglish, displayTopNews)}
+                </div>
+              </div>
+              {/* All News Videos */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">All News Stories</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(allNewsVideos, displayTopNews)}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -12,6 +12,7 @@ import ShowDetailsSimilarShows from "../similarShowsCard";
 import ShowSeasonsTabs from "../showSeasonsTabs";
 import Slider from "react-slick";
 import ShowEpisodesCard from "../showEpisodesCard";
+import Footer from "../footer";
 
 const apiConstants = {
   initial: "INITIAL",
@@ -296,6 +297,7 @@ const ShowDetailsPage = () => {
       <div className="show-details-content-main-container">
         {checkingWhatToDisplay()}
       </div>
+      <Footer />
     </div>
   );
 };

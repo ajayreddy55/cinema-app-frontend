@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import { InfinitySpin } from "react-loader-spinner";
 import { getYear } from "date-fns";
 import SimilarNewsCard from "../similarnewscard";
+import Footer from "../footer";
 
 const apiConstants = {
   initial: "INITIAL",
@@ -200,6 +201,7 @@ const NewsWatch = () => {
       <div className="news-player-main-container">
         {checkingWhatToDisplay()}
       </div>
+      <Footer />
     </div>
   );
 };

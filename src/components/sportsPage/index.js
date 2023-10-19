@@ -11,6 +11,7 @@ import SportsCardSlider from "../sportsCardSlider";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InfinitySpin } from "react-loader-spinner";
+import Footer from "../footer";
 
 const carouselList = [
   {
@@ -79,6 +80,36 @@ const SportsPage = () => {
     errMsg: "",
   });
 
+  const [basketballSports, setBasketballSports] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [indiaVsAustralia, setIndiaVsAustralia] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [syedMustaqTrophy, setSyedMustaqTrophy] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [indianSuperLeague, setIndianSuperLeague] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [allSports, setAllSports] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -101,6 +132,31 @@ const SportsPage = () => {
   //football sports use effect
   useEffect(() => {
     getFootballSports();
+  }, []);
+
+  //basketball sports use effect
+  useEffect(() => {
+    getBasketballSports();
+  }, []);
+
+  //ind vs aus use effect
+  useEffect(() => {
+    getIndVsAusMatches();
+  }, []);
+
+  //syed mustaq trophy use effect
+  useEffect(() => {
+    getSyedMustaqTrophy();
+  }, []);
+
+  //indian super league use effect
+  useEffect(() => {
+    getIndianSuperLeague();
+  }, []);
+
+  //all sports use effect
+  useEffect(() => {
+    getAllSports();
   }, []);
 
   //top sports api
@@ -215,6 +271,206 @@ const SportsPage = () => {
     } else {
       const topSportsPicksJson = await topSportsPicksRes.json();
       setFootballSports((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topSportsPicksJson.message,
+      }));
+    }
+  };
+
+  //basketball sports api
+  const getBasketballSports = async () => {
+    setBasketballSports((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const sportsUrl =
+      "http://localhost:5555/api/sports?matchDate=&sportType=basket&tournamentName=&team1=&team2=&votes=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topSportsPicksRes = await fetch(sportsUrl, options);
+
+    if (topSportsPicksRes.ok) {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setBasketballSports((prevState) => ({
+        ...prevState,
+        responseList: topSportsPicksJson.sportsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setBasketballSports((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topSportsPicksJson.message,
+      }));
+    }
+  };
+
+  //ind vs aus api
+  const getIndVsAusMatches = async () => {
+    setIndiaVsAustralia((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const sportsUrl =
+      "http://localhost:5555/api/sports?matchDate=&sportType=cricket&tournamentName=&team1=ind&team2=aus&votes=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topSportsPicksRes = await fetch(sportsUrl, options);
+
+    if (topSportsPicksRes.ok) {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setIndiaVsAustralia((prevState) => ({
+        ...prevState,
+        responseList: topSportsPicksJson.sportsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setIndiaVsAustralia((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topSportsPicksJson.message,
+      }));
+    }
+  };
+
+  //syed mushtaq trophy api
+  const getSyedMustaqTrophy = async () => {
+    setSyedMustaqTrophy((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const sportsUrl =
+      "http://localhost:5555/api/sports?matchDate=&sportType=cricket&tournamentName=syed mushtaq&team1=&team2=&votes=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topSportsPicksRes = await fetch(sportsUrl, options);
+
+    if (topSportsPicksRes.ok) {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setSyedMustaqTrophy((prevState) => ({
+        ...prevState,
+        responseList: topSportsPicksJson.sportsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setSyedMustaqTrophy((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topSportsPicksJson.message,
+      }));
+    }
+  };
+
+  //indian super league api
+  const getIndianSuperLeague = async () => {
+    setIndianSuperLeague((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const sportsUrl =
+      "http://localhost:5555/api/sports?matchDate=&sportType=football&tournamentName=indian super&team1=&team2=&votes=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topSportsPicksRes = await fetch(sportsUrl, options);
+
+    if (topSportsPicksRes.ok) {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setIndianSuperLeague((prevState) => ({
+        ...prevState,
+        responseList: topSportsPicksJson.sportsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setIndianSuperLeague((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: topSportsPicksJson.message,
+      }));
+    }
+  };
+
+  //all sports api
+  const getAllSports = async () => {
+    setAllSports((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const sportsUrl =
+      "http://localhost:5555/api/sports?matchDate=&sportType=&tournamentName=&team1=&team2=&votes=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const topSportsPicksRes = await fetch(sportsUrl, options);
+
+    if (topSportsPicksRes.ok) {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setAllSports((prevState) => ({
+        ...prevState,
+        responseList: topSportsPicksJson.sportsList,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const topSportsPicksJson = await topSportsPicksRes.json();
+      setAllSports((prevState) => ({
         ...prevState,
         responseList: [],
         resStatus: apiConstants.failure,
@@ -401,10 +657,92 @@ const SportsPage = () => {
                   {checkingWhatToDisplay(footballSports, displayTopSportsPicks)}
                 </div>
               </div>
+              {/* Basketball Matches */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Basketball Matches</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(
+                    basketballSports,
+                    displayTopSportsPicks
+                  )}
+                </div>
+              </div>
+              {/* Ind Vs Aus Matches */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">IND Vs AUS Matches</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(
+                    indiaVsAustralia,
+                    displayTopSportsPicks
+                  )}
+                </div>
+              </div>
+              {/* Syed Mushtaq Ali Trophy */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">
+                      Syed Mushtaq Ali Trophy Highlights
+                    </h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(
+                    syedMustaqTrophy,
+                    displayTopSportsPicks
+                  )}
+                </div>
+              </div>
+              {/* Indian Super League */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">
+                      Indian Super League Highlights
+                    </h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(
+                    indianSuperLeague,
+                    displayTopSportsPicks
+                  )}
+                </div>
+              </div>
+              {/* All Sports */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">All Matches</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(allSports, displayTopSportsPicks)}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InfinitySpin } from "react-loader-spinner";
 import { getYear } from "date-fns";
+import Footer from "../footer";
 
 const apiConstants = {
   initial: "INITIAL",
@@ -170,6 +171,7 @@ const ShowPlayer = () => {
       <div className="show-player-main-container">
         {checkingWhatToDisplay()}
       </div>
+      <Footer />
     </div>
   );
 };

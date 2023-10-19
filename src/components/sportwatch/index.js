@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import { InfinitySpin } from "react-loader-spinner";
 import { getYear } from "date-fns";
 import SimilarSportCard from "../similarsportcard";
+import Footer from "../footer";
 
 const apiConstants = {
   initial: "INITIAL",
@@ -204,6 +205,7 @@ const SportWatch = () => {
       <div className="sport-player-main-container">
         {checkingWhatToDisplay()}
       </div>
+      <Footer />
     </div>
   );
 };

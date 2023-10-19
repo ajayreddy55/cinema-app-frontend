@@ -14,6 +14,7 @@ import { InfinitySpin } from "react-loader-spinner";
 import MoviesCardSlider from "../movieCardSlider";
 import NewsCardSlider from "../newsCardSlider";
 import ShowsCardSlider from "../showsCardSlider";
+import Footer from "../footer";
 
 const carouselList = [
   {
@@ -1722,6 +1723,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

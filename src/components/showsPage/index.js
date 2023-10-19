@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InfinitySpin } from "react-loader-spinner";
 import ShowsCardSlider from "../showsCardSlider";
+import Footer from "../footer";
 
 const carouselList = [
   {
@@ -106,6 +107,42 @@ const ShowsPage = () => {
     errMsg: "",
   });
 
+  const [showsInTelugu, setShowsInTelugu] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [showsInHindi, setShowsInHindi] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [showsInEnglish, setShowsInEnglish] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [showsByMarvel, setShowsByMarvel] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [showsByHBO, setShowsByHBO] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [allShows, setAllShows] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -153,6 +190,36 @@ const ShowsPage = () => {
   //drama shows use effect
   useEffect(() => {
     getDramaShows();
+  }, []);
+
+  // shows in telugu use effect
+  useEffect(() => {
+    getShowsInTelugu();
+  }, []);
+
+  // shows in hindi use effect
+  useEffect(() => {
+    getShowsInHindi();
+  }, []);
+
+  // shows in English use effect
+  useEffect(() => {
+    getShowsInEnglish();
+  }, []);
+
+  // shows by marvel use effect
+  useEffect(() => {
+    getShowsByMarvel();
+  }, []);
+
+  // shows by hbo use effect
+  useEffect(() => {
+    getShowsByHBO();
+  }, []);
+
+  // all shows use effect
+  useEffect(() => {
+    getAllShows();
   }, []);
 
   //top shows api
@@ -475,6 +542,246 @@ const ShowsPage = () => {
     }
   };
 
+  // shows in telugu api
+  const getShowsInTelugu = async () => {
+    setShowsInTelugu((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=telugu&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setShowsInTelugu((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setShowsInTelugu((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  // shows in hindi api
+  const getShowsInHindi = async () => {
+    setShowsInHindi((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=hindi&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setShowsInHindi((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setShowsInHindi((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  // shows in english api
+  const getShowsInEnglish = async () => {
+    setShowsInEnglish((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=english&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setShowsInEnglish((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setShowsInEnglish((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  // shows by marvel api
+  const getShowsByMarvel = async () => {
+    setShowsByMarvel((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=&original_language=&category=tv-shows&studio=marvel&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setShowsByMarvel((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setShowsByMarvel((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  // shows by hbo api
+  const getShowsByHBO = async () => {
+    setShowsByHBO((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=&original_language=&category=tv-shows&studio=hbo&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setShowsByHBO((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setShowsByHBO((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
+  // all shows api
+  const getAllShows = async () => {
+    setAllShows((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const showsUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=&original_language=&category=tv-shows&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const showsRes = await fetch(showsUrl, options);
+
+    if (showsRes.ok) {
+      const showsResJson = await showsRes.json();
+      setAllShows((prevState) => ({
+        ...prevState,
+        responseList: showsResJson.movies_shows,
+        resStatus: apiConstants.success,
+        errMsg: "",
+      }));
+    } else {
+      const showsResJson = await showsRes.json();
+      setAllShows((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: showsResJson.message,
+      }));
+    }
+  };
+
   //displaying error message
   const displayErrorMessage = (object) => {
     return (
@@ -724,10 +1031,91 @@ const ShowsPage = () => {
                   {checkingWhatToDisplay(dramaShows, displayTopShows)}
                 </div>
               </div>
+              {/* Shows in Telugu */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Shows in Telugu</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(showsInTelugu, displayTopShows)}
+                </div>
+              </div>
+              {/* Shows in Hindi */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Shows in Hindi</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(showsInHindi, displayTopShows)}
+                </div>
+              </div>
+              {/* Shows in English */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Shows in English</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(showsInEnglish, displayTopShows)}
+                </div>
+              </div>
+              {/* Shows by Marvel */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">
+                      Marvel Studios Originals
+                    </h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(showsByMarvel, displayTopShows)}
+                </div>
+              </div>
+              {/* Shows by HBO */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">HBO Originals</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(showsByHBO, displayTopShows)}
+                </div>
+              </div>
+              {/* All Shows */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">All Shows</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(allShows, displayTopShows)}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

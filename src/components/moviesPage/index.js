@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InfinitySpin } from "react-loader-spinner";
 import MoviesCardSlider from "../movieCardSlider";
+import Footer from "../footer";
 
 const carouselList = [
   {
@@ -114,6 +115,42 @@ const MoviesPage = () => {
     errMsg: "",
   });
 
+  const [moviesInTelugu, setMoviesInTelugu] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [moviesInHindi, setMoviesInHindi] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [hollywoodMovies, setHollywoodMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [tollywoodMovies, setTollywoodMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [bollywoodMovies, setBollywoodMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
+  const [allMovies, setAllMovies] = useState({
+    responseList: [],
+    resStatus: apiConstants.initial,
+    errMsg: "",
+  });
+
   //navigate to login
   useEffect(() => {
     const jwtToken = Cookies.get("cinema_jwt_token");
@@ -166,6 +203,36 @@ const MoviesPage = () => {
   //romantic movies useEffect
   useEffect(() => {
     getRomanticMovies();
+  }, []);
+
+  // movies in telugu useEffect
+  useEffect(() => {
+    getMoviesInTelugu();
+  }, []);
+
+  // movies in Hindi useEffect
+  useEffect(() => {
+    getMoviesInHindi();
+  }, []);
+
+  // hollywood movies useEffect
+  useEffect(() => {
+    getHollywoodMovies();
+  }, []);
+
+  // tollywood movies useEffect
+  useEffect(() => {
+    getTollywoodMovies();
+  }, []);
+
+  // bollywood movies useEffect
+  useEffect(() => {
+    getBollywoodMovies();
+  }, []);
+
+  // all movies useEffect
+  useEffect(() => {
+    getAllMovies();
   }, []);
 
   //top movies api
@@ -510,6 +577,234 @@ const MoviesPage = () => {
     }
   };
 
+  // movies in telugu api
+  const getMoviesInTelugu = async () => {
+    setMoviesInTelugu((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=telugu&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setMoviesInTelugu((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setMoviesInTelugu((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  // movies in hindi api
+  const getMoviesInHindi = async () => {
+    setMoviesInHindi((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=hindi&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setMoviesInHindi((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setMoviesInHindi((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  // hollywood movies api
+  const getHollywoodMovies = async () => {
+    setHollywoodMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=&original_language=english&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setHollywoodMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setHollywoodMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  // tollywood movies api
+  const getTollywoodMovies = async () => {
+    setTollywoodMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=&original_language=telugu&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setTollywoodMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setTollywoodMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  // bollywood movies api
+  const getBollywoodMovies = async () => {
+    setBollywoodMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=&original_language=hindi&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setBollywoodMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setBollywoodMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
+  // all movies api
+  const getAllMovies = async () => {
+    setAllMovies((prevState) => ({
+      ...prevState,
+      resStatus: apiConstants.inProgress,
+    }));
+
+    const moviesUrl =
+      "http://localhost:5555/api/movies-show?genre=&rating=&views=&languages=&original_language=&category=movies&studio=&director=";
+
+    const jwtToken = Cookies.get("cinema_jwt_token");
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    };
+
+    const moviesRes = await fetch(moviesUrl, options);
+
+    if (moviesRes.ok) {
+      const moviesResJson = await moviesRes.json();
+      setAllMovies((prevState) => ({
+        ...prevState,
+        responseList: moviesResJson.movies_shows,
+        resStatus: apiConstants.success,
+      }));
+    } else {
+      const moviesResJson = await moviesRes.json();
+      setAllMovies((prevState) => ({
+        ...prevState,
+        responseList: [],
+        resStatus: apiConstants.failure,
+        errMsg: moviesResJson.message,
+      }));
+    }
+  };
+
   //displaying error message
   const displayErrorMessage = (object) => {
     return (
@@ -774,10 +1069,89 @@ const MoviesPage = () => {
                   {checkingWhatToDisplay(romanticMovies, displayTopMovies)}
                 </div>
               </div>
+              {/* Movies in Telugu */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Movies in Telugu</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(moviesInTelugu, displayTopMovies)}
+                </div>
+              </div>
+              {/* Movies in Hindi */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Movies in Hindi</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(moviesInHindi, displayTopMovies)}
+                </div>
+              </div>
+              {/* Hollywood Movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Hollywood Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(hollywoodMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* Tollywood Movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Tollywood Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(tollywoodMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* Bollywood Movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">Bollywood Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(bollywoodMovies, displayTopMovies)}
+                </div>
+              </div>
+              {/* All Movies */}
+              <div className="col-12 mt-3 mb-3 d-flex justify-content-center">
+                <div className="home-slides-main-container">
+                  <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                    <h2 className="home-topics-heading">All Movies</h2>
+                    <Link className="home-explore-link">
+                      <p className="home-explore-text">Explore more</p>
+                      <IoIosArrowForward className="home-explore-more-arrow" />
+                    </Link>
+                  </div>
+                  {checkingWhatToDisplay(allMovies, displayTopMovies)}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
