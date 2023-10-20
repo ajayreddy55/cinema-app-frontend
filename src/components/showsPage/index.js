@@ -785,8 +785,8 @@ const ShowsPage = () => {
   //displaying error message
   const displayErrorMessage = (object) => {
     return (
-      <div className="d-flex justify-content-center align-items-center mt-4 loader-container-home">
-        <h3 className="home-empty-list-text">{object.errMsg}</h3>
+      <div className="d-flex justify-content-center align-items-center mt-4 loader-container-shows">
+        <h3 className="shows-empty-list-text">{object.errMsg}</h3>
       </div>
     );
   };
@@ -794,7 +794,7 @@ const ShowsPage = () => {
   //displaying loader
   const displayLoader = () => {
     return (
-      <div className="d-flex justify-content-center align-items-center mt-4 loader-container-home">
+      <div className="d-flex justify-content-center align-items-center mt-4 loader-container-shows">
         <InfinitySpin width="200" color="#ffffff" />
       </div>
     );
@@ -821,7 +821,7 @@ const ShowsPage = () => {
   const displayTextLengthZero = () => {
     return (
       <div className="d-flex justify-content-center align-items-center mt-4">
-        <h3 className="home-empty-list-text">No Data Found</h3>
+        <h3 className="shows-empty-list-text">No Data Found</h3>
       </div>
     );
   };
@@ -833,7 +833,7 @@ const ShowsPage = () => {
     }
 
     return (
-      <Slider {...sliderSettings} className="home-categories-slider mt-4">
+      <Slider {...sliderSettings} className="shows-categories-slider mt-4">
         {object.responseList.map((eachShow) => (
           <ShowsCardSlider key={eachShow._id} eachShow={eachShow} />
         ))}

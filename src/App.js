@@ -14,6 +14,7 @@ import MoviesPage from "./components/moviesPage";
 import ShowsPage from "./components/showsPage";
 import SportsPage from "./components/sportsPage";
 import NewsPage from "./components/newsPage";
+import SearchPage from "./components/searchPage";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
       <Route exact path="/tv-shows" element={<ShowsPage />} />
       <Route exact path="/sports" element={<SportsPage />} />
       <Route exact path="/news" element={<NewsPage />} />
+      <Route exact path="/search" element={<SearchPage />} />
     </Routes>
   );
 }

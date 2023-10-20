@@ -13,15 +13,19 @@ const apiConstants = {
   failure: "FAILURE",
 };
 
-const Header = () => {
+const Header = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { changeSearchInput } = props;
 
   const [profileObject, setProfileObject] = useState({
     profileDetails: {},
     resStatus: apiConstants.initial,
     errMsg: "",
   });
+
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     getProfileDetails();
@@ -117,6 +121,17 @@ const Header = () => {
     }
   };
 
+  const navigateToSearchPage = () => {
+    if (location.pathname !== "/search") {
+      navigate("/search");
+    }
+  };
+
+  const changeTheSearchInput = (event) => {
+    setSearchInput(event.target.value);
+    changeSearchInput(event.target.value);
+  };
+
   const homePageActive = location.pathname === "/" ? "header-active-page" : "";
   const moviesPageActive =
     location.pathname === "/movies" ? "header-active-page" : "";
@@ -195,6 +210,10 @@ const Header = () => {
             type="search"
             placeholder="Search"
             aria-label="Search"
+            name="search"
+            onFocus={navigateToSearchPage}
+            onChange={changeTheSearchInput}
+            value={searchInput}
           />
         </form>
         <Popup
